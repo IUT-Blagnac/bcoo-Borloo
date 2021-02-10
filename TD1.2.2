@@ -1,0 +1,32 @@
+@startuml Ordinateur
+
+hide circle
+hide empty attributes
+hide empty methods
+
+class Ordinateur {
+    PrixAchat
+    Valeur
+}
+
+class Clavier {
+    Azerty
+    Querty
+}
+
+class Touches {
+
+}
+
+class Proprietaire {
+    Nom
+    Prenom
+}
+
+Ordinateur "" --- "1" Clavier
+
+Clavier "" --- "*" Touches
+
+Ordinateur "" --- "0..1" Proprietaire
+
+@enduml
