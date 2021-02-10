@@ -9,7 +9,7 @@ class Examen {
     Coefficient
 }
 
-class Etudiant {
+class E as "Etudiant" {
     INE
     Nom
     Prenom
@@ -17,8 +17,8 @@ class Etudiant {
 }
 
 class Cours {
-    TitreC
-    CodeC
+    Titre
+    CodeModule
 }
 
 class Note {
@@ -30,12 +30,18 @@ class Enseignant {
     Prenom
 }
 
-Etudiant "0..*" --- "0..*" Cours
+class hh {
+    
+}
 
-Examen "1" --- "1" Cours
+(E, Examen) . Note
 
-Note "1" --- "1" Etudiant
+E "1..*" --- "0..*" Cours
 
-Cours "0..*" --- "1" Enseignant
+Examen "?" --- "1" Cours
 
-@enduml 
+Note "1" --- "1" E
+
+Cours --- "1" Enseignant
+
+@enduml
