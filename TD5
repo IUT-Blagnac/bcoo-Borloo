@@ -1,0 +1,40 @@
+@startuml
+
+'autonumber
+hide footbox
+
+participant A as ":Client"
+participant B as ":Caissier"
+participant C as ":Caisse"
+
+A -> B: Arrive
+
+participant Tapis as ":Tapis"
+
+A -> Tapis : DépôtArticles
+activate Tapis
+
+loop "Pour chaque articles"
+  B -> Tapis : PrendreArticle
+  B -> C: Scan
+  activate C
+
+  opt "Qté > 1"
+    B -> C : Saisir(Qté)
+  end
+
+  C --> A : Prix et Libellé
+  C --> B : Prix et Libellé
+
+end
+
+B -> C : Fin
+
+C --> A : Montant total
+C --> B : Montant total
+
+
+participant Article as ":Article"
+
+
+@enduml
