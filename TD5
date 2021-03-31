@@ -5,36 +5,50 @@ hide footbox
 
 participant A as ":Client"
 participant B as ":Caissier"
-participant C as ":Caisse"
 
-A -> B: Arrive
+participant C as ":Caisse"
+A -> B: arrive
+activate B
 
 participant Tapis as ":Tapis"
 
-A -> Tapis : DépôtArticles
+A -> Tapis: deposerArticles
 activate Tapis
 
-loop "Pour chaque articles"
-  B -> Tapis : PrendreArticle
-  B -> C: Scan
+loop "Pour chaque article a"
+  B -> Tapis: prendreArticle
+  B -> C: scan(a)
   activate C
+  
+  participant Article as "a:Article"
+  
+  par
+  C --> Article: getPrix()
+  C --> Article: getLibellé()
 
-  opt "Qté > 1"
-    B -> C : Saisir(Qté)
+  else
+  opt "qté > 1"
+    B -> C: saisir(Qté)
   end
+  end
+  C --> A: prix et libellé
+  C --> B: prix et libellé
 
-  C --> A : Prix et Libellé
-  C --> B : Prix et Libellé
-
+  C -> C: montantTotal += prix * qté
 end
 
-B -> C : Fin
+  B -> C: fin
+  C --> B: montant total
+  B --> A: montant total
 
-C --> A : Montant total
-C --> B : Montant total
+  A -> B : payer en liquide (s)
+  B -> C : encaisser (s)
 
+  C --> B : reste à rendre
+  B -> A : rendre (reste)
 
-participant Article as ":Article"
+  C -> C : enregistrer
+  C --> B : imprimer ticket
 
-
+  B --> A : donner ticket
 @enduml
