@@ -1,0 +1,10 @@
+@startuml
+
+class Qualifications
+class Artisans
+class Taches
+class Modeles
+class Chantiers
+
+
+@enduml
